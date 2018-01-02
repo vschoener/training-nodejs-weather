@@ -14,7 +14,8 @@ geoCode.getGeoCodeAddress(lookingForAddress)
         return weather.getWeather(address.latitude, address.longitude);
     })
     .then((weather) => {
-        console.log(`Temperature there is ${weather.temperature} and it feels like ${weather.apparentTemperature}`);
+         console.log(`Temperature there is ${weather.temperature} and it feels like ${weather.apparentTemperature}`);
     })
-    .catch(error => console.log(error))
-;
+    .catch((error) => {
+        console.log(error);
+    });
