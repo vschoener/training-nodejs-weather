@@ -8,17 +8,13 @@ weather.units = argv.units || 'auto';
 weather.key = process.env.DARK_SKY_API || '';
 
 console.log(`Looking for address ${lookingForAddress}`);
-geoCode.getGeoCodeAddress(lookingForAddress, (error, address) => {
-    if (error) {
-        console.log(error);
-    } else {
+geoCode.getGeoCodeAddress(lookingForAddress)
+    .then((address) => {
         console.log(`Address found: ${address.address}`);
-        weather.getWeather(address.latitude, address.longitude, (error, weather) => {
-            if (error) {
-               console.log(error);
-               return;
-            } 
-            console.log(`Temperature there is ${weather.temperature} and it feels like ${weather.apparentTemperature}`);
-        });
-    }
-});
+        return weather.getWeather(address.latitude, address.longitude);
+    })
+    .then((weather) => {
+        console.log(`Temperature there is ${weather.temperature} and it feels like ${weather.apparentTemperature}`);
+    })
+    .catch(error => console.log(error))
+;
