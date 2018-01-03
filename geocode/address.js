@@ -4,7 +4,7 @@ const axios = require('axios');
 module.exports = {
     url: 'http://maps.google.com/maps/api/geocode/json',
 
-    getGeoCodeAddress (address, callback) {
+    getGeoCodeAddress (address) {
         const encodedAddress = encodeURIComponent(address);
 
         return axios.get(`${this.url}?address=${encodedAddress}`)
@@ -22,6 +22,11 @@ module.exports = {
                     latitude: response.data.results[0].geometry.location.lat,
                     longitude: response.data.results[0].geometry.location.lng
                 };
+            }).catch((error) => {
+                if (error.response) {
+                    throw `${error.response.status} ${error.config.url} ${error.response.statusText}`;
+                }
+                throw error;
             });
         }
 }

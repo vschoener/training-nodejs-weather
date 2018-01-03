@@ -5,7 +5,6 @@ const weather = require('./weather/weather');
 const argv = yargs.argv;
 const lookingForAddress = argv.address;
 weather.units = argv.units || 'auto';
-weather.key = process.env.DARK_SKY_API || '';
 
 console.log(`Looking for address ${lookingForAddress}`);
 geoCode.getGeoCodeAddress(lookingForAddress)
